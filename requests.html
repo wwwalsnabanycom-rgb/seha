@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="google-site-verification" content="SXM-GBwV54gm_ST7j29Xt5w1T3AODQE3xs3DZYm_b5Y" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>صحة - منصة الخدمات الصحية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* Global Styles */
+        * {
+            font-family: 'Cairo', 'Noto Sans Arabic', 'Tajawal', sans-serif !important;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            margin: 0;
+            padding: 10px 0 0 0;
+            direction: rtl;
+        }
+
+        /* Header Section */
+        .top-header {
+            background-color: #F7F8FC;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            position: fixed;
+            top: -100px;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            z-index: 1000;
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
+            transition: top 0.8s ease, opacity 0.8s ease;
+        }
+
+        .top-header.show {
+            top: 0;
+            opacity: 1;
+        }
+
+        .hamburger-icon {
+            font-size: 26px;
+            color: #67b3f5;
+            cursor: pointer;
+        }
+
+        .brand-logo {
+            height: 48px;
+            object-fit: contain;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb-container {
+            margin-top: 90px;
+            padding: 30px 20px 0;
+            text-align: right;
+            direction: rtl;
+            font-size: 14px;
+        }
+
+        .breadcrumb-container a {
+            text-decoration: none;
+        }
+
+        .breadcrumb-separator {
+            color: #616469;
+            margin: 0 5px;
+        }
+
+        /* Main Title */
+        h1 {
+            color: #2e6fb9;
+            text-align: center;
+            font-weight: 570;
+            font-size: 41px;
+            /* تعديل ١: تقليل المسافة بين العنوان وكلمة "حدد نوع الاستعلام" */
+            margin-top: 15px;
+            margin-bottom: 0px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+            width: auto;
+        }
+
+        h1::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            transform: translate(-43%, -40%);
+            background-image: url('https://i.postimg.cc/mktdLGnp/image.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: calc(100% + 0.1px);
+            height: 90%;
+            z-index: -1;
+        }
+
+        /* Description */
+        .primary-description {
+            font-size: 16px;
+            color: #7c8fa4;
+            text-align: center;
+            /* تعديل ١: المسافة بين العنوان وهذا النص تكون 6pt */
+            margin: 1pt 20px 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            /* تعديل ٢: توسيع الحشو الجانبي ليكون أقل فتصبح البطاقات أقرب للأطراف */
+            padding: 0 12px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Service Card */
+        .service-card {
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            /* تعديل ٢: البطاقات عريضة أكثر نحو أطراف الشاشة */
+            width: calc(50% - 16px);
+            min-width: 280px;
+            /* تعديل ٢: الارتفاع يساوي العرض تقريباً لشكل مستطيل */
+            height: 235px !important;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 31px;
+            transition: all 0.4s ease;
+
+        }
+
+        /* تعديل ٣: العنوان قابل للنقر فقط وليس المستطيل كله */
+        .card-title {
+            font-size: 16px;
+            color: #000000;
+            font-weight: normal;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .card-title:hover {
+            color: #2e6fb9;
+            text-decoration: underline;
+        }
+
+        .card-details {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        /* تعديل ٤: حجم خط شرح الخدمة أكبر بمقدار 1pt */
+        .card-desc {
+            font-size: 12px;
+            color: #616469;
+            text-align: center;
+            line-height: 1.5;
+            margin-top: -50pt;
+            padding: 40px;
+        }
+
+        /* تعديل ٤: زر الاستعلام مع المسافة 25pt وزوايا 4pt */
+        .card-btn {
+            background-color: #306db5;
+            color: white;
+            text-decoration: none;
+            padding: 1px 100px;
+            /* تعديل ٤: زوايا 4pt فقط */
+            border-radius: 6px;
+            font-size: 14px;
+            display: inline-block;
+            transition: background-color 0.2s;
+            width: fit-content;
+            /* تعديل ٤: المسافة بين شرح الخدمة والزر 25pt */
+            margin-top: 1pt;
+        }
+
+        .card-btn:hover {
+            background-color: #255a8f;
+        }
+
+        /* Expanded State */
+        .service-card.expanded .card-content {
+            justify-content: flex-start;
+            padding-top: 10px;
+        }
+
+        .service-card.expanded .card-title {
+            margin-bottom: 5px;
+        }
+
+        .service-card.expanded .card-details {
+            display: flex;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .service-card {
+                width: calc(50% - 12px);
+                min-width: 140px;
+                height: 160px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .service-card {
+                width: 100%;
+                max-width: none;
+                height: 140px;
+            }
+
+            .services-grid {
+                gap: 12px;
+                padding: 0 8px 40px;
+            }
+        }
+
+        /* Navigation Popup Menu */
+        .navigation-popup-menu {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background-color: #F7F8FC;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 0;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: height 0.5s ease-in-out, padding-top 0.5s ease-in-out;
+        }
+
+        .navigation-popup-menu.open {
+            height: 70vh;
+            padding-top: 30px;
+        }
+
+        .navigation-popup-menu .popup-menu-item {
+            font-size: 15px;
+            color: #226699;
+            margin: 15px 0;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .navigation-popup-menu .popup-menu-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background-color: #a3c1e5;
+            border-radius: 1px;
+        }
+
+        .login-button-custom {
+            background-color: #306db5;
+            color: white;
+            width: 90%;
+            max-width: 350px;
+            padding: 12px;
+            border-radius: 30px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            direction: rtl;
+        }
+
+        .login-button-custom img {
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        /* Footer Section */
+        .page-footer {
+            background-color: #2e6fb9;
+            color: white;
+            padding: 20px 15px 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            font-size: 16px;
+            direction: rtl;
+            min-height: 150px;
+            gap: 25px;
+            position: relative;
+        }
+
+        .page-footer img.footer-brand-logo {
+            height: 65px;
+            filter: none;
+            margin-bottom: 15px;
+            margin-top: 60px;
+        }
+
+        .footer-description-text {
+            font-size: 13px;
+            line-height: 1.7;
+            white-space: normal;
+            max-width: 700px;
+        }
+
+        .primary-menu-title {
+            font-weight: 700;
+            font-size: 15px;
+            margin-top: 30px;
+            position: relative;
+            display: inline-block;
+            color: white;
+            cursor: default;
+        }
+
+        .primary-menu-title::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130%;
+            height: 3px;
+            background-color: #a3c1e5;
+            border-radius: 2px;
+        }
+
+        .footer-navigation-links {
+            margin-top: 5px;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            user-select: none;
+            width: 100%;
+            max-width: 320px;
+            padding: 0 10px;
+        }
+
+        .footer-navigation-links div {
+            cursor: default;
+            color: #ffffff;
+            font-weight: normal;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            margin: 0 8px;
+        }
+
+        .footer-social-icons {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .footer-social-icons a {
+            color: white;
+            font-size: 24px;
+            transition: color 0.2s;
+        }
+
+        .footer-social-icons a:hover {
+            color: #a3c1e5;
+        }
+
+        .contact-section-title {
+            font-weight: 700;
+            font-size: 15px;
+            margin-top: 18px;
+            color: white;
+        }
+
+        .contact-divider-line {
+            width: 140px;
+            height: 3px;
+            background-color: #a3c1e5;
+            margin: 6px auto 2px auto;
+            border-radius: 1px;
+        }
+
+        .contact-information,
+        .working-hours {
+            font-size: 12px !important;
+        }
+
+        .contact-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .footer-bottom-text {
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer-bottom-links {
+            font-size: 10px;
+            margin-top: -15px;
+        }
+
+        .footer-bottom-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        /* Chat Icon and Popup */
+        .chat-icon-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 40px;
+            width: 100px;
+            height: 85px;
+            z-index: 2000;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .chat-icon-fixed:hover {
+            transform: scale(1.05);
+        }
+
+        .chat-icon-fixed img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .chat-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 3000;
+            padding: 20px;
+        }
+
+        .chat-popup-content {
+            background-color: white;
+            width: 100%;
+            max-width: 360px;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: right;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            animation: popupSlideUp 0.3s ease;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif !important;
+        }
+
+        .chat-popup-content * {
+            font-family: Arial, sans-serif !important;
+        }
+
+        @keyframes popupSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-popup-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-align: right;
+        }
+
+        .chat-popup-text {
+            font-size: 13px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .chat-popup-buttons {
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: row-reverse;
+            gap: 10px;
+        }
+
+        .chat-btn-start {
+            background-color: #2e6fb9;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .chat-btn-start i {
+            font-size: 12px;
+        }
+
+        .chat-btn-cancel {
+            background-color: #f0f0f0;
+            color: #555;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .uai.userway_dark {
+            background: rgb(48, 109, 181) !important;
+        }
+
+        .uai img {
+            content: url('https://cdn.userway.org/widgetapp/images/body_wh.svg') !important;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="top-header" id="mainHeader">
+        <img src="https://i.postimg.cc/hvXqx1Cv/1.png" alt="شعار صحة" class="brand-logo" />
+        <div class="hamburger-icon" id="hamburgerMenuIcon" onclick="toggleNavigationMenu()">&#9776;</div>
+    </div>
+
+    <!-- Navigation Popup Menu -->
+    <div class="navigation-popup-menu" id="navigationPopupMenu">
+        <a href="https://www.seha.sa/ui#/services" class="popup-menu-item" onclick="toggleNavigationMenu()">الخدمات</a>
+        <a href="requests.html" class="popup-menu-item" onclick="toggleNavigationMenu()">الاستعلامات</a>
+        <a href="https://www.seha.sa/ui#/faq" class="popup-menu-item" onclick="toggleNavigationMenu()">الأسئلة
+            الشائعة</a>
+        <a href="https://www.seha.sa/ui#/ContactUs" class="popup-menu-item" onclick="toggleNavigationMenu()">تواصل
+            معنا</a>
+        <a href="https://www.seha.sa/ui#/iamredirection/1" class="popup-menu-item"
+            onclick="toggleNavigationMenu()">إنشاء حساب</a>
+        <a href="login.php" class="login-button-custom" onclick="toggleNavigationMenu()">
+            <span>تسجيل الدخول</span>
+            <img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12.914'%20height='15.067'%20viewBox='0%200%2012.914%2015.067'%3e%3cdefs%3e%3cstyle%3e.a{fill:%23fff;}%3c/style%3e%3c/defs%3e%3cpath%20class='a'%20d='M10.1,6.592a3.637,3.637,0,0,1,.752.319,3.306,3.306,0,0,1,.748.614,3.956,3.956,0,0,1,.668.971,6.094,6.094,0,0,1,.462,1.446,9.776,9.776,0,0,1,.185,1.988,3.17,3.17,0,0,1-.841,2.216,2.647,2.647,0,0,1-2.026.921H2.867A2.647,2.647,0,0,1,.84,14.146,3.168,3.168,0,0,1,0,11.931,9.772,9.772,0,0,1,.185,9.942,6.1,6.1,0,0,1,.647,8.5a3.954,3.954,0,0,1,.668-.971,3.306,3.306,0,0,1,.748-.614,3.637,3.637,0,0,1,.752-.319,4.265,4.265,0,0,1-.324-3.956,4.258,4.258,0,0,1,2.3-2.3,4.259,4.259,0,0,1,3.338,0,4.262,4.262,0,0,1,2.3,2.3A4.267,4.267,0,0,1,10.1,6.592ZM6.457,1.076a3.11,3.11,0,0,0-2.283.946A3.112,3.112,0,0,0,3.228,4.3a3.107,3.107,0,0,0,.946,2.283,3.114,3.114,0,0,0,2.283.946A3.108,3.108,0,0,0,8.74,6.587,3.111,3.111,0,0,0,9.686,4.3,3.111,3.111,0,0,0,8.74,2.022,3.11,3.11,0,0,0,6.457,1.076Zm3.59,12.914a1.623,1.623,0,0,0,1.265-.6,2.141,2.141,0,0,0,.526-1.459,6.43,6.43,0,0,0-.66-3.17,2.205,2.205,0,0,0-1.9-1.219A4.158,4.158,0,0,1,6.457,8.609,4.158,4.158,0,0,1,3.632,7.542a2.206,2.206,0,0,0-1.9,1.219,6.431,6.431,0,0,0-.66,3.17A2.139,2.139,0,0,0,1.6,13.389a1.626,1.626,0,0,0,1.265.6h7.18Z'/%3e%3c/svg%3e"
+                alt="تسجيل دخول" style="width: 13px; height: 15px; margin-right: 10px; vertical-align: middle;" />
+        </a>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-container">
+        <a href="index.html" style="color: #2e6cb4; font-weight: bold;">الرئيسية</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span style="color: #616469; font-weight: normal;">الاستعلامات</span>
+    </div>
+
+    <!-- Main Content -->
+    <div style="text-align: center;">
+        <h1>الاستعلامات</h1>
+    </div>
+    <!-- تعديل ١: margin-top يساوي 6pt فقط -->
+    <p class="primary-description">حدد نوع الاستعلام</p>
+
+    <!-- Services Cards -->
+    <div class="services-grid" id="servicesGrid">
+
+        <!-- Card 1: الإجازات المرضية -->
+        <div class="service-card">
+            <div class="card-content">
+                <!-- تعديل ٣: الرابط على الكلمة فقط وليس المستطيل -->
+                <a href="https://seha-sa-public.xo.je/" class="card-content" style="color: #000000;">الإجازات
+                    المرضية</a>
+                <div class="card-details">
+                    <p class="card-desc">خدمة الاستعلام عن الإجازات المرضية تتيح لك الاستعلام عن حالة طلبك للإجازة
+                        وتمكنك من تصدير وطباعة نسخة لها</p>
+                    <a href="https://www.seha.sa/ui#/inquiries/slenquiry" class="card-btn">استعلام</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: فحص اللياقة للطلبة المستجدين -->
+        <div class="service-card">
+            <div class="card-content">
+                <a href="https://www.seha.sa/ui#/inquiries/mlenquiry" class="card-title" style="color: #000000;">خدمة
+                    الاستعلام عن فحص اللياقة للطلبة المستجدين </a>
+                <div class="card-details">
+                    <p class="card-desc">خدمة الاستعلام عن التقارير الطبية تتيح لك الاستعلام عن حالة التقرير الطبي
+                        وتمكنك من تصدير وطباعة نسخة له</p>
+                    <a href="https://www.seha.sa/ui#/inquiries/mlenquiry" class="card-btn">استعلام</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: التقارير الطبية -->
+        <div class="service-card">
+            <div class="card-content">
+                <a href="https://premarriage.seha.sa/" class="card-content" style="color: #000000;">خدمة الاستعلام عن
+                    شهادات فحص الزواج</a>
+                <div class="card-details">
+                    <p class="card-desc">خدمة الاستعلام عن نتيجة الفحص ما قبل الزواج تتيح لك الاستعلام عن حالة طلبك
+                        وتمكنك من
+                        تصدير وطباعة نسخة لها</p>
+                    <a href="https://premarriage.seha.sa/" class="card-btn">استعلام</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4: شهادات الميلاد -->
+        <div class="service-card">
+            <div class="card-content">
+                <a href="https://www.seha.sa/#/inquiries/organizations" class="card-title"
+                    style="color: #000000;">الاستعلام عن المنشآت المقدمة للخدمات الصحية</a>
+                <div class="card-details">
+                    <p class="card-desc">يمكنك الاستعلام عن المنشآت المقدمة للخدمات
+                        الصحية.</p>
+                    <a href="https://www.seha.sa/#/inquiries/organizations" class="card-btn">استعلام</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5: شهادات الوفاة -->
+        <div class="service-card">
+            <div class="card-content">
+                <a href="https://www.seha.sa/ui#/inquiries/covid19report" class="card-title"
+                    style="color: #000000;">التحقق من شهادة فحص فايروس كورونا المستجد (كوفيد - 19)</a>
+                <div class="card-details">
+                    <p class="card-desc">خدمة الاستعلام تتيح التحقق من صحة تقرير فحص فايروس كورونا المستجد كوفيد - 19)
+                        عن طريق
+
+                        تقنية PCR</p>
+                    <a href="https://www.seha.sa/ui#/inquiries/covid19report" class="card-btn">استعلام</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 6: بيانات المواليد -->
+        <div class="service-card">
+            <div class="card-content">
+                <a href="https://vaccinecertificate.sehhaty.sa/" class="card-content" style="color: #000000;">عرض
+                    التقرير الطبي وشهادة التطعيم</a>
+                <div class="card-details">
+                    <p class="card-desc">خدمة الاستعلام عن التقارير الطبية والشهادات الخاصة بالتطعيمات تتيح امكانية
+                        التحقق من صحة البيانات الواردة في التقرير الطبي وشهادة التطعيم</p>
+                    <a href="https://vaccinecertificate.sehhaty.sa/" class="card-btn">استعلام</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 7: بيانات الوفيات -->
+        <div class="service-card">
+            <div class="card-content">
+                <a href="https://www.seha.sa/ui#/inquiries/AmanatInquiry" class="card-content"
+                    style="color: #000000;">الشهادات الصحية</a>
+                <div class="card-details">
+                    <p class="card-desc">خدمة الاستعلام للشهادات الصحية (أمانات) تتيح لك الاستعلام عن تقريرك الطبي
+                        وتمكنك من تصديره وطباعته</p>
+                    <a href="https://www.seha.sa/ui#/inquiries/AmanatInquiry" class="card-btn">استعلام</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 8: فحص العمالة الوافدة -->
+        <div class="service-card">
+            <div class="card-content">
+                <a href="https://www.seha.sa/ui#/inquiries/DrivingLicenseInquiry" class="card-content"
+                    style="color: #000000;">رخص القيادة</a>
+                <div class="card-details">
+                    <p class="card-desc">خدمة الاستعلام للفحص الطبي لرخص القيادة تتيحلك الاستعلام عن تقريرك الطبي وتمكنك
+                        من تصديره وطباعته </p>
+                    <a href="https://www.seha.sa/ui#/inquiries/DrivingLicenseInquiry" class="card-btn">استعلام</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="page-footer">
+        <img src="logo-top.svg" alt="شعار صحة" class="footer-brand-logo" />
+        <div class="mine-text">
+            منصة صحة تخدم جميع المنشأت الطبية من خلال تقديم الخدمات الصحية إلكترونياً لجميع المنشأت الطبية وتسعى إلى
+            توحيد وأتمتة الاجراءات والخدمات بما في دوره رفع جودة الاداء وخفض التكاليف.
+        </div>
+        <div class="primary-menu-title">القائمة الرئيسية</div>
+        <div class="footer-navigation-links">
+            <div><a href="https://www.seha.sa/ui#/services" style="color: white; text-decoration: none;">الخدمات</a>
+            </div>
+            <div><a href="requests.html" style="color: white; text-decoration: none;">الاستعلامات</a></div>
+            <div><a href="https://www.seha.sa/ui#/faq" style="color: white; text-decoration: none;">الأسئلة الشائعة</a>
+            </div>
+            <div><a href="https://www.seha.sa/#/environmental-impact" style="color: white; text-decoration: none;">الأثر
+                    البيئي</a></div>
+            <div><a href="https://www.seha.sa/ui#/ContactUs" style="color: white; text-decoration: none;">تواصل معنا</a>
+            </div>
+        </div>
+        <div class="contact-section-title">تواصل معنا</div>
+        <div class="contact-divider-line"></div>
+        <div class="contact-section"
+            style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; width: 100%; max-width: 800px;">
+            <div style="text-align: right;">
+                <div class="contact-icon contact-information">
+                    <i class="fas fa-phone"></i>
+                    <span> 920002005</span>
+                </div>
+                <div class="contact-icon contact-information">
+                    <i class="fas fa-envelope"></i>
+                    <span> support@seha.sa</span>
+                </div>
+                <div class="contact-icon contact-information">
+                    <i class="fab fa-whatsapp"></i>
+                    <span> 920002005</span>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <img src="logo-end.svg" style="height: 50px;" alt="شعار لين" />
+                <div style="height: 50px; border-right: 2px solid white;"></div>
+                <img src="motun.svg" style="height: 50px;" alt="شعار الصحة" />
+            </div>
+            <div class="working-hours contact-information">
+                أوقات العمل : الأحد حتى الخميس 8 ص - 11 م
+                <br><br><br>
+            </div>
+        </div>
+        <div class="footer-bottom-text">
+            منصة صحة معتمدة من قبل وزارة الصحة © 2025
+        </div>
+        <div class="footer-bottom-links">
+            <a href="#">سياسة الخصوصية</a> | <a href="#">شروط الإستخدام</a> | <a
+                href="https://www.seha.sa/files/T_Cs_v3.pdf" target="_blank">دليل الاستخدام</a>
+        </div>
+    </div>
+
+    <!-- Chat Icon -->
+    <div class="chat-icon-fixed" onclick="toggleChatPopup()">
+        <img src="https://i.postimg.cc/R06HHBLM/nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskh-20260203-014046-0000.png"
+            alt="Chat Icon">
+    </div>
+
+    <!-- Chat Popup Overlay -->
+    <div class="chat-popup-overlay" id="chatPopupOverlay">
+        <div class="chat-popup-content">
+            <div class="chat-popup-title">الشروط والأحكام</div>
+            <div class="chat-popup-text">
+                يتم تسجيل وحفظ محتوى المحادثة وبيانات استخدامها لأغراض تشغيل الخدمة وتحسينها، وذلك وفقًا لشروط الاستخدام
+                وسياسة الخصوصية المعتمدة في منصة صحة. تُولّد ردود المساعد الرقمي آليًا، وهي مخصصة لتقديم معلومات عامة
+                فقط، ولا تُعد استشارة طبية، ولا ينبغي الاعتماد عليها في التعامل مع الحالات الطارئة أو في اتخاذ أي قرارات
+                علاجية دون الرجوع إلى طبيب أو مختص صحي. يتحمل المستخدم كامل المسؤولية عن استخدام هذه المعلومات أو
+                الاعتماد عليها، ويُعد استخدام الخدمة موافقة على هذه الأحكام، بالإضافة إلى شروط الاستخدام وسياسة الخصوصية
+                المعتمدة.
+            </div>
+            <div class="chat-popup-buttons">
+                <a href="https://elevenlabs.io/conversational-ai" class="chat-btn-start" target="_blank">
+                    ابدأ المحادثة
+                    <i class="fas fa-comment-dots"></i>
+                </a>
+                <button class="chat-btn-cancel" onclick="toggleChatPopup()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- UserWay Widget -->
+    <script id="userway-script" src="https://cdn.userway.org/widget.js" data-account="2w89zcJOTG" data-position="5"
+        data-size="small" async=""></script>
+
+    <script>
+        function toggleNavigationMenu() {
+            document.getElementById('navigationPopupMenu').classList.toggle('open');
+        }
+
+        function toggleChatPopup() {
+            const overlay = document.getElementById('chatPopupOverlay');
+            overlay.style.display = overlay.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // تعديل ٤: الضغط المطول على المستطيل يظهر التفاصيل
+        // تعديل ٣: الضغط على المستطيل نفسه (خارج الكلمة) لا ينقل
+        const cards = document.querySelectorAll('.service-card');
+        cards.forEach(card => {
+            let pressTimer;
+            let isLongPress = false;
+            let startX, startY;
+
+            const startPress = (e) => {
+                isLongPress = false;
+                // حفظ موضع البداية للتمييز بين السكرول والضغط
+                const touch = e.touches ? e.touches[0] : e;
+                startX = touch.clientX;
+                startY = touch.clientY;
+
+                pressTimer = setTimeout(() => {
+                    isLongPress = true;
+                    card.classList.toggle('expanded');
+                }, 600);
+            };
+
+            const endPress = (e) => {
+                clearTimeout(pressTimer);
+                isLongPress = false;
+            };
+
+            const cancelPress = (e) => {
+                clearTimeout(pressTimer);
+                isLongPress = false;
+            };
+
+            const movePress = (e) => {
+                const touch = e.touches ? e.touches[0] : e;
+                const dx = Math.abs(touch.clientX - startX);
+                const dy = Math.abs(touch.clientY - startY);
+                // إذا تحرك المستخدم أكثر من 10px، ألغِ الضغط المطول (يعني يتصفح)
+                if (dx > 10 || dy > 10) {
+                    clearTimeout(pressTimer);
+                    isLongPress = false;
+                }
+            };
+
+            card.addEventListener('mousedown', startPress);
+            card.addEventListener('mouseup', endPress);
+            card.addEventListener('mouseleave', cancelPress);
+            card.addEventListener('mousemove', movePress);
+
+            card.addEventListener('touchstart', (e) => {
+                startPress(e);
+            }, {
+                passive: true
+            });
+            card.addEventListener('touchend', endPress);
+            card.addEventListener('touchcancel', cancelPress);
+            card.addEventListener('touchmove', movePress, {
+                passive: true
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.getElementById('mainHeader').classList.add('show');
+        });
+    </script>
+</body>
+
+</html>

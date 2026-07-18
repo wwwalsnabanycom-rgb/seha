@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+
+    <!-- خط Cairo من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- مكتبة Bootstrap 5 RTL -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+
+    <!-- مكتبة أيقونات Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- مكتبة Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <!-- ملف التنسيقات الخارجي -->
+    <style>
+        /* ========== تنسيقات صفحة تسجيل الدخول ========== */
+
+        body {
+            font-family: 'Cairo', 'Noto Sans Arabic', 'Tajawal', sans-serif !important;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            /* تحديد عرض الكارت ليطابق التصميم */
+            padding: 20px;
+        }
+
+        .login-title {
+            color: #337ab7;
+            /* لون العنوان الأزرق */
+            font-weight: 550;
+            font-size: 1.7rem;
+        }
+
+        /* تنسيق الحقول (Inputs) */
+        .form-control {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #3b7cbd;
+            font-size: 0.7rem;
+            background-color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .form-label {
+            color: #888;
+            font-weight: 330;
+            margin-bottom: 8px;
+        }
+
+        .form-control::placeholder {
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* زر "دخول" الرئيسي */
+        .btn-main {
+            background-color: #3b7cbd;
+            border-color: #3b7cbd;
+            color: white;
+            font-weight: 1000;
+            font-size: 0.7rem;
+            padding: 12px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .btn-main:hover {
+            background-color: #3B4F83;
+            border-color: #2d6ba5;
+            color: white;
+        }
+
+        /* رابط "نسيت كلمة المرور" */
+        .forgot-pass-link {
+            color: #3b7cbd;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .forgot-pass-link:hover {
+            text-decoration: underline;
+        }
+
+        .divider-container {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+
+        .divider-line {
+            flex-grow: 1;
+            border-top: 1px solid #d1d5db;
+        }
+
+        .divider-text {
+            padding: 0 15px;
+            color: #888;
+            font-weight: 600;
+        }
+
+
+        .btn-nifath {
+            background-color: #ffffff;
+            /* لون خلفية أبيض */
+            border: 1px solid #3b7cbd;
+            /* الحدود زرقاء */
+            color: #5d6d7e;
+            /* لون النص الرمادي الغامق */
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: 0.3s;
+        }
+
+        .btn-nifath:hover {
+            background-color: #e2f0ee;
+            color: #2d8a76;
+            border-color: #247a67;
+        }
+
+        .btn-nifath span {
+            color: #2d8a76;
+            /* اللون الأخضر لكلمة "نفاذ" فقط */
+            font-weight: 700;
+        }
+
+        .bottom-link {
+            color: #337ab7;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* المحاذاة لليسار في وضع RTL تعني اليمين */
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .bottom-link i {
+            font-size: 1.0rem;
+            color: #4a6fa5;
+        }
+
+        .bottom-link:hover {
+            text-decoration: underline;
+        }
+
+        .text-gray {
+            color: #555;
+            margin-left: 5px;
+            font-weight: 600;
+        }
+
+        .dashed-line {
+            border-top: 1px dashed #dbdbdb;
+            margin: 20px 0 30px 0;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <h2 class="text-right login-title mb-1">تسجيل الدخول</h2>
+
+        <div class="dashed-line"></div>
+
+
+        <!-- نموذج الدخول -->
+        <form method="POST">
+
+            <!-- حقل الهوية -->
+            <div class="mb-4">
+                <label for="idNumber" class="form-label">رقم الهوية / الإقامة</label>
+                <input type="text" class="form-control" required id="idNumber" name="idNumber" placeholder="1234567890">
+            </div>
+
+            <!-- حقل كلمة المرور -->
+            <div class="mb-4">
+                <label for="password" class="form-label">كلمة المرور</label>
+                <input type="password" class="form-control" id="password" name="password" required
+                    placeholder="**********">
+            </div>
+
+            <!-- زر دخول -->
+            <button type="submit" class="btn btn-main w-100 mb-4">
+                دخول
+            </button>
+
+            <!-- رابط استعادة كلمة المرور -->
+            <a href="#" class="forgot-pass-link">
+                <i class="bi bi-person-lock"></i>
+                <span>نسيت كلمة المرور</span>
+                <span>استعادة كلمة المرور</span>
+            </a>
+
+        </form>
+
+        <!-- فاصل "أو" -->
+        <div class="divider-container">
+            <div class="divider-line"></div>
+            <div class="divider-text">أو</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- زر نفاذ -->
+        <button type="button" class="btn-nifath">
+            الدخول عبر <span>نفاذ</span>
+        </button>
+
+        <!-- الروابط السفلية -->
+        <div class="mt-4 d-flex flex-column">
+
+            <a href="#" class="bottom-link">
+                <i class="bi bi-person-plus"></i>
+                <span>ليس لديك حساب؟ <span class="text-gray">إنشاء حساب جديد</span></span>
+            </a>
+
+            <a href="#" class="bottom-link">
+                <i class="bi bi-person-check"></i>
+                <span>تفعيل مستخدم مسجل سابقاً</span>
+            </a>
+
+        </div>
+    </div>
+    <!-- Chat Icon -->
+    <div class="chat-icon-fixed" onclick="toggleChatPopup()">
+        <img src="https://i.postimg.cc/R06HHBLM/nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskht-mn-nskh-20260203-014046-0000.png"
+            alt="Chat Icon">
+    </div>
+
+    <div class="chat-popup-overlay" id="chatPopupOverlay">
+        <div class="chat-popup-content">
+            <div class="chat-popup-title">الشروط والأحكام</div>
+            <div class="chat-popup-text">
+                يتم تسجيل وحفظ محتوى المحادثة وبيانات استخدامها لأغراض تشغيل الخدمة وتحسينها، وذلك وفقًا لشروط الاستخدام
+                وسياسة الخصوصية المعتمدة في منصة صحة. تُولّد ردود المساعد الرقمي آليًا، وهي مخصصة لتقديم معلومات عامة
+                فقط، ولا تُعد استشارة طبية، ولا ينبغي الاعتماد عليها في التعامل مع الحالات الطارئة أو في اتخاذ أي قرارات
+                علاجية دون الرجوع إلى طبيب أو مختص صحي. يتحمل المستخدم كامل المسؤولية عن استخدام هذه المعلومات أو
+                الاعتماد عليها، ويُعد استخدام الخدمة موافقة على هذه الأحكام، بالإضافة إلى شروط الاستخدام وسياسة الخصوصية
+                المعتمدة.
+            </div>
+            <div class="chat-popup-buttons">
+                <a href="https://elevenlabs.io/conversational-ai" class="chat-btn-start" target="_blank">
+                    ابدأ المحادثة
+                    <i class="fas fa-comment-dots"></i>
+                </a>
+                <button class="chat-btn-cancel" onclick="toggleChatPopup()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+    <!-- سكريبت Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script id="userway-script" src="https://cdn.userway.org/widget.js" data-account="2w89zcJOTG" data-position="5"
+        data-size="small" async=""></script>
+
+</body>
+
+</html>
