@@ -615,3 +615,39 @@ p {
     content: url('https://cdn.userway.org/widgetapp/images/body_wh.svg') !important;
    
 }
+
+
+
+/* صندوق عرض النتائج العام */
+./* تعديل كرت النتيجة لإزالة المسافات الكبيرة */
+.seha-exact-result-card {
+    background-color: #f1f3f5;
+    border-radius: 8px;
+    padding: 12px 15px; /* تقليل الهوامش الداخلية للكرت */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    text-align: center;
+}
+
+/* تقليص المسافة الفاصلة بين كل حقل وآخر داخل النتيجة */
+.result-block {
+    margin-bottom: 10px; /* جعل المسافة أصغر وأكثر تناسقاً */
+}
+
+.result-block:last-child {
+    margin-bottom: 0;
+}
+
+.result-title-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 2px; /* تقليل المسافة بين العنوان والقيمة تحته */
+    font-family: 'Cairo', sans-serif;
+}
+
+.result-value-text {
+    font-size: 15px;
+    font-weight: 400;
+    color: #333;
+    font-family: 'Cairo', sans-serif;
+}
